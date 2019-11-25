@@ -14,6 +14,8 @@ import javax.persistence.JoinColumns;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "Autopayment")
 public class AutoPayment implements Serializable {
@@ -26,12 +28,13 @@ public class AutoPayment implements Serializable {
 	@Column(name = "AMOUNT")
 	private BigDecimal amount;
 	@Column(name = "DATEOFSTART")
-	private String dateOfStart;
+	private String dateOfStart = null;
 	@Column(name = "DATEOFEND")
-	private String dateOfEnd;
+	private String dateOfEnd = null;
 	@Column(name = "SERVICENAME")
 	private String serviceName;
 	
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL)	
 	  @JoinColumns({
 	        @JoinColumn(

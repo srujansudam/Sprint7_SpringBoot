@@ -82,8 +82,9 @@ public class AutoPaymentServiceImpl implements AutoPaymentService {
 	@Override
 	public boolean validEndDate(String endDate, String startDate) {
 		boolean validDate = false;
-		if (Pattern.matches("^((0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[012])/(?:[0-9]{2})?[0-9]{2})$", endDate)) {
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		if (Pattern.matches("^((?:[0-9]{2})?[0-9]{2}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01]))$", endDate)) {
+			
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			LocalDate endDate1 = LocalDate.parse(endDate, formatter);
 			LocalDate startDate1 = LocalDate.parse(startDate, formatter);
 			if (!endDate1.isBefore(startDate1)) {

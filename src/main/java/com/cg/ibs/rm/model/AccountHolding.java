@@ -2,6 +2,7 @@ package com.cg.ibs.rm.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -19,6 +20,7 @@ public class AccountHolding implements Serializable {
 	private static final long serialVersionUID = 8657885082899327732L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "ahid")
 	private Long aHId;
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Customer customer;

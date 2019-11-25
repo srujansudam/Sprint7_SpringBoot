@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.ibs.rm.exception.IBSExceptions;
@@ -43,7 +44,7 @@ public class AdminController {
 		return result;
 	}
 
-	@GetMapping("/acceptCards/{cardNumber}/{decision}")
+	@PutMapping("/acceptCards/{cardNumber}/{decision}")
 	public ResponseEntity<String> acceptCards(@PathVariable("cardNumber") BigInteger cardNumber,
 			@PathVariable("decision") String decision) {
 		ResponseEntity<String> result;
@@ -72,7 +73,7 @@ public class AdminController {
 
 	}
 
-	@GetMapping("/acceptBeneficiaries/{accountNumber}/{decision}")
+	@PutMapping("/acceptBeneficiaries/{accountNumber}/{decision}")
 	public ResponseEntity<String> acceptBeneficiaries(@PathVariable("accountNumber") BigInteger accountNumber,
 			@PathVariable("decision") String decision) {
 		ResponseEntity<String> result;

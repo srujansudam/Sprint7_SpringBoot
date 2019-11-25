@@ -16,6 +16,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "Transaction")
 @NamedQueries({
@@ -52,6 +54,7 @@ public class TransactionBean implements Serializable {
 	@Column(name = "REFERENCE_ID", length = 20)
 	private String referenceId;
 
+	@JsonIgnore
 	@ManyToOne
 	private Account account;
 

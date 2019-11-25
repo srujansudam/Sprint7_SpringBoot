@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -16,21 +17,37 @@ public class ServiceProvider implements Serializable {
 	 */
 	private static final long serialVersionUID = -7898401150996938520L;
 	@Id
+	@Column(name = "User_id")
     private String userId;
+	@Column(name = "category")
     private String category;
+	@Column(name = "NAME_OF_COMPANY")
     private String nameOfCompany;
+	@Column(name = "GSTIN")
     private String gstin;
+    @Column(name = "PAN_NUMBER")
     private String panNumber;
+    @Column(name = "PAN_CARD_UPLOAD")
     private byte[] panCardUpload;
+    @Column(name = "ACCOUNT_NUMBER")
     private BigInteger accountNumber;
+    @Column(name = "BANK_NAME")
     private String bankName;
+    @Column(name = "ADDRESS_PROOF_UPLOAD")
     private byte[] addressProofUpload;
+    @Column(name = "COMPANY_ADDRESS")
     private String companyAddress;
+    @Column(name = "MOBILE_NUMBER")
     private BigInteger mobileNumber;
+    @Column(name = "PASSWORD")
     private String password;
+    @Column(name = "SPI")
     private BigInteger spi = BigInteger.valueOf(-1);
+    @Column(name = "STATUS")
     private String status = "Pending";
+    @Column(name = "REQUEST_DATE")
     private LocalDateTime requestDate;
+    @Column(name = "REMARKS")
     private String remarks = "None";
 
 	public ServiceProvider() {

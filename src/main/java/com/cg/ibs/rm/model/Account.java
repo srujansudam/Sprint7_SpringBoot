@@ -20,7 +20,6 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
 @Entity
 @Table(name = "Account")
 public class Account implements Serializable {
@@ -57,7 +56,7 @@ public class Account implements Serializable {
 	private Set<AccountHolding> accountHoldings = new HashSet<>();
 
 	@JsonIgnore
-	@OneToMany
+	@OneToMany(mappedBy = "account")
 	private Set<TransactionBean> transaction = new HashSet<>();
 
 	public Account() {
