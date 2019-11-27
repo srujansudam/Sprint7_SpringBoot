@@ -18,7 +18,7 @@ import com.cg.ibs.rm.exception.ExceptionMessages;
 import com.cg.ibs.rm.exception.IBSExceptions;
 import com.cg.ibs.rm.model.CreditCard;
 import com.cg.ibs.rm.model.Customer;
-import com.cg.ibs.rm.ui.Status;
+import com.cg.ibs.rm.ui.CardStatus;
 
 @Repository("CreditCardDao")
 public class CreditCardDAOImpl implements CreditCardDAO {
@@ -38,8 +38,8 @@ public class CreditCardDAOImpl implements CreditCardDAO {
 		Join<Customer, CreditCard> creditCards = custRoot.join("creditCards");
 		query.select(creditCards)
 				.where(builder.and(builder.equal(custRoot.get("uci"), uci),
-						builder.or(builder.equal(creditCards.get("cardStatus"), Status.ACTIVE),
-								(builder.equal(creditCards.get("cardStatus"), Status.PENDING)))));
+						builder.or(builder.equal(creditCards.get("cardStatus"), CardStatus.ACTIVE),
+								(builder.equal(creditCards.get("cardStatus"), CardStatus.PENDING)))));
 		java.util.List<CreditCard> list = manager.createQuery(query).getResultList();
 		if (list.isEmpty()) {
 			throw new IBSExceptions(ExceptionMessages.NO_CARDS);
@@ -54,14 +54,14 @@ public class CreditCardDAOImpl implements CreditCardDAO {
 		boolean result = false;
 		//logger.info("entering into copyDetails method of BeneficiaryDAOImpl class");
 		CreditCard card2 = manager.find(CreditCard.class, card.getCardNumber());
-		if (card2 == null || card2.getCardStatus().equals(Status.BLOCKED)) {
+		if (card2 == null || card2.getCardStatus().equals(CardStatus.BLOCKED)) {
 			Customer customer = manager.find(Customer.class, uci);
 			card.setCustomer(customer);
 			manager.merge(card);
 			result = true;
-		} else if ((card.getCardStatus().equals(Status.ACTIVE))) {
+		} else if ((card.getCardStatus().equals(CardStatus.ACTIVE))) {
 			throw new IBSExceptions(ExceptionMessages.CARD_ALREADY_ADDED);
-		} else if ((card.getCardStatus().equals(Status.PENDING))) {
+		} else if ((card.getCardStatus().equals(CardStatus.PENDING))) {
 			throw new IBSExceptions(ExceptionMessages.CARD_UNDER_PENDING);
 		}
 		return result;
@@ -74,7 +74,7 @@ public class CreditCardDAOImpl implements CreditCardDAO {
 		CreditCard card = manager.find(CreditCard.class, cardNumber);
 		if (null == card) {
 			throw new IBSExceptions(ExceptionMessages.CARD_DOESNT_EXIST);
-		} else if ((card.getCardStatus().equals(Status.ACTIVE)) || (card.getCardStatus().equals(Status.PENDING))) {
+		} else if ((card.getCardStatus().equals(CardStatus.ACTIVE)) || (card.getCardStatus().equals(CardStatus.PENDING))) {
 			manager.remove(card);
 			check = true;
 		}

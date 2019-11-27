@@ -16,10 +16,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
-@Table(name = "Transaction")
+@Table(name = "Transactions")
 @NamedQueries({
 		@NamedQuery(name = "GET_MINI", query = "select t from TransactionBean t where t.account.accNo= :accNo order by t.transactionDate"),
 		@NamedQuery(name = "GET_PERIODIC", query = "select t from TransactionBean t where t.account.accNo= :accNo AND t.transactionDate BETWEEN :startDate AND :endDate") })
@@ -54,7 +52,6 @@ public class TransactionBean implements Serializable {
 	@Column(name = "REFERENCE_ID", length = 20)
 	private String referenceId;
 
-	@JsonIgnore
 	@ManyToOne
 	private Account account;
 

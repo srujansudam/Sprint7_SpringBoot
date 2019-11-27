@@ -13,13 +13,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.cg.ibs.rm.ui.Status;
-import com.cg.ibs.rm.ui.Type;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.cg.ibs.rm.ui.CardStatus;
+import com.cg.ibs.rm.ui.Beneficiary_Type;
 
 @Entity
-@Table(name = "Beneficiary")
-
+@Table(name = "Beneficiaries")
 public class Beneficiary implements Serializable {
 	/**
 	 * 
@@ -36,14 +34,29 @@ public class Beneficiary implements Serializable {
 	private String bankName;
 	@Column(name = "Type_of_account")
 	@Enumerated(EnumType.STRING)
-	private Type type;
+	private Beneficiary_Type type;
 	@Column(name = "Status")
 	@Enumerated(EnumType.STRING)
-	private Status status;
+	private CardStatus status;
 	@Column(name = "Remarks")
-	private String adminRemarks=" ";
+	private String adminRemarks = " ";
 	@Column(name = "Beneficiary_Timestamp")
-	private LocalDateTime timestamp; 
+	private LocalDateTime timestamp;
+	@Column(name = "BANKER_ID")
+	private Integer bankId;
+
+	@ManyToOne
+	@JoinColumn(name = "UCI")
+	private Customer customer;
+
+	public Integer getBankId() {
+		return bankId;
+	}
+
+	public void setBankId(Integer bankId) {
+		this.bankId = bankId;
+	}
+
 	public LocalDateTime getTimestamp() {
 		return timestamp;
 	}
@@ -52,17 +65,13 @@ public class Beneficiary implements Serializable {
 		this.timestamp = timestamp;
 	}
 
-	@JsonIgnore
-	@ManyToOne
-	@JoinColumn(name = "UCI")
-	private Customer customer;
-
 	public Beneficiary() {
 		super();
 	}
 
-	public Beneficiary(BigInteger accountNumber, String accountName, String ifscCode, String bankName, Type type,
-			Status status, String adminRemarks, Customer customer) {
+	public Beneficiary(BigInteger accountNumber, String accountName, String ifscCode, String bankName,
+			Beneficiary_Type type, CardStatus status, String adminRemarks, LocalDateTime timestamp, Integer bankId,
+			Customer customer) {
 		super();
 		this.accountNumber = accountNumber;
 		this.accountName = accountName;
@@ -71,20 +80,16 @@ public class Beneficiary implements Serializable {
 		this.type = type;
 		this.status = status;
 		this.adminRemarks = adminRemarks;
+		this.timestamp = timestamp;
+		this.bankId = bankId;
 		this.customer = customer;
 	}
 
-	@Override
-	public String toString() {
-		return "Beneficiary [accountNumber=" + accountNumber + ", accountName=" + accountName + ", ifscCode=" + ifscCode
-				+ ", bankName=" + bankName + ", type=" + type + ", status=" + status + "]";
-	}
-
-	public Type getType() {
+	public Beneficiary_Type getType() {
 		return type;
 	}
 
-	public void setType(Type type) {
+	public void setType(Beneficiary_Type type) {
 		this.type = type;
 	}
 
@@ -136,11 +141,11 @@ public class Beneficiary implements Serializable {
 		this.bankName = bankName;
 	}
 
-	public Status getStatus() {
+	public CardStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(Status status) {
+	public void setStatus(CardStatus status) {
 		this.status = status;
 	}
 

@@ -21,7 +21,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "Account")
+@Table(name = "Accounts")
 public class Account implements Serializable {
 	/**
 	 * 
@@ -54,7 +54,7 @@ public class Account implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<AccountHolding> accountHoldings = new HashSet<>();
-
+	
 	@JsonIgnore
 	@OneToMany(mappedBy = "account")
 	private Set<TransactionBean> transaction = new HashSet<>();

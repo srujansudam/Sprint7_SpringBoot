@@ -1,6 +1,7 @@
 package com.cg.ibs.rm.service;
 
 import java.math.BigInteger;
+import java.util.Random;
 import java.util.Set;
 
 //import org.apache.log4j.Logger;
@@ -84,4 +85,9 @@ public class Bank_AdminServiceImpl implements Bank_AdminService {
 		return result;
 	}
 
+	@Override
+	public Integer queuingMethod() {
+		Random r = new Random();
+		return r.nextInt(5)+1;
+	}
 }

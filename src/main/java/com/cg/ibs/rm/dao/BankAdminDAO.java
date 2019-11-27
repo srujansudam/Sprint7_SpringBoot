@@ -8,9 +8,9 @@ import com.cg.ibs.rm.model.Beneficiary;
 import com.cg.ibs.rm.model.CreditCard;
 
 public interface BankAdminDAO {
-	public Set<BigInteger> getRequests();
+	public Set<BigInteger> getRequests(Integer bankerId);
 
-	public Set<CreditCard> getCreditCardDetails();
+	public Set<CreditCard> getCreditCardDetails(Integer bankerId);
 
 	public Set<Beneficiary> getBeneficiaryDetails();
 

@@ -19,7 +19,7 @@ import com.cg.ibs.rm.exception.ExceptionMessages;
 import com.cg.ibs.rm.exception.IBSExceptions;
 import com.cg.ibs.rm.model.Beneficiary;
 import com.cg.ibs.rm.model.Customer;
-import com.cg.ibs.rm.ui.Status;
+import com.cg.ibs.rm.ui.CardStatus;
 
 @Repository("BeneficiaryDao")
 public class BeneficiaryDAOImpl implements BeneficiaryDAO {
@@ -42,8 +42,8 @@ public class BeneficiaryDAOImpl implements BeneficiaryDAO {
 		Join<Customer, Beneficiary> beneficiaries = custRoot.join("beneficiaries");
 		query.select(beneficiaries)
 				.where(builder.and((builder.equal(custRoot.get("uci"), uci)),
-						(builder.or(builder.equal(beneficiaries.get("status"), Status.ACTIVE),
-								builder.equal(beneficiaries.get("status"), Status.PENDING)))));
+						(builder.or(builder.equal(beneficiaries.get("status"), CardStatus.ACTIVE),
+								builder.equal(beneficiaries.get("status"), CardStatus.PENDING)))));
 		List<Beneficiary> list = manager.createQuery(query).getResultList();
 		if (list.isEmpty()) {
 			throw new IBSExceptions(ExceptionMessages.NO_BENEFICIARIES);
@@ -59,7 +59,7 @@ public class BeneficiaryDAOImpl implements BeneficiaryDAO {
 		boolean result = false;
 		//logger.info("entering into copyDetails method of BeneficiaryDAOImpl class");
 		Beneficiary beneficiary2 = manager.find(Beneficiary.class, beneficiary.getAccountNumber());
-		if (beneficiary2 == null || beneficiary2.getStatus().equals(Status.BLOCKED)) {
+		if (beneficiary2 == null || beneficiary2.getStatus().equals(CardStatus.BLOCKED)) {
 			Customer customer = manager.find(Customer.class, uci);
 			beneficiary.setCustomer(customer);
 			manager.merge(beneficiary);
@@ -89,10 +89,10 @@ public class BeneficiaryDAOImpl implements BeneficiaryDAO {
 		Beneficiary beneficiary = manager.find(Beneficiary.class, beneficiary1.getAccountNumber());
 		if (null == beneficiary) {
 			throw new IBSExceptions(ExceptionMessages.BENEFICIARY_DOESNT_EXIST);
-		} else if (beneficiary.getStatus().equals(Status.PENDING)) {
+		} else if (beneficiary.getStatus().equals(CardStatus.PENDING)) {
 			throw new IBSExceptions(ExceptionMessages.ACCOUNT_UNDER_PENDING);
-		} else if (beneficiary.getStatus().equals(Status.ACTIVE)) {
-			beneficiary.setStatus(Status.PENDING);
+		} else if (beneficiary.getStatus().equals(CardStatus.ACTIVE)) {
+			beneficiary.setStatus(CardStatus.PENDING);
 			manager.merge(beneficiary);
 			check = true;
 		}
@@ -107,7 +107,7 @@ public class BeneficiaryDAOImpl implements BeneficiaryDAO {
 		Beneficiary beneficiary = manager.find(Beneficiary.class, accountNumber);
 		if (null == beneficiary) {
 			throw new IBSExceptions(ExceptionMessages.BENEFICIARY_DOESNT_EXIST);
-		} else if ((beneficiary.getStatus().equals(Status.ACTIVE) || beneficiary.getStatus().equals(Status.PENDING))) {
+		} else if ((beneficiary.getStatus().equals(CardStatus.ACTIVE) || beneficiary.getStatus().equals(CardStatus.PENDING))) {
 			manager.remove(beneficiary);
 			check = true;
 		}

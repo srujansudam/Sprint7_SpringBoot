@@ -21,5 +21,7 @@ public interface Bank_AdminService {
 	public boolean disapproveBenficiary(BigInteger accountNumber) throws IBSExceptions;
 
 	public boolean disapproveCreditCard(BigInteger cardNumber) throws IBSExceptions;
+	
+	public Integer queuingMethod();
 
 }

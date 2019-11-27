@@ -13,8 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 @Table(name = "Customers")
 public class Customer implements Serializable {
@@ -54,19 +52,14 @@ public class Customer implements Serializable {
 	private long applicantId;
 	@Column(name = "login_count", length = 2)
 	private int login = 0;
-	@JsonIgnore
 	@OneToMany(mappedBy = "customer")
-	
 	private Set<CreditCard> creditCards = new HashSet<>();
 	@OneToMany(mappedBy = "customer")
-	@JsonIgnore
 	private Set<Beneficiary> beneficiaries = new HashSet<>();
 	@OneToMany
 	@JoinColumn(name = "UCI")
-	@JsonIgnore
 	private Set<AutoPayment> autoPayments = new HashSet<>();
 	@OneToMany(mappedBy = "customer")
-	@JsonIgnore
 	private Set<AccountHolding> accountHoldings = new HashSet<>();
 	
 	

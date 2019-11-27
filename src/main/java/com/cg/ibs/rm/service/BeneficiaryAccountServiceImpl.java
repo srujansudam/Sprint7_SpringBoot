@@ -2,6 +2,7 @@ package com.cg.ibs.rm.service;
 
 import java.math.BigInteger;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -13,24 +14,27 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cg.ibs.rm.dao.BeneficiaryDAO;
 import com.cg.ibs.rm.exception.IBSExceptions;
 import com.cg.ibs.rm.model.Beneficiary;
-import com.cg.ibs.rm.ui.Status;
+import com.cg.ibs.rm.ui.CardStatus;
 
 @Service("beneficiaryAccountService")
 public class BeneficiaryAccountServiceImpl implements BeneficiaryAccountService {
-	//private static Logger logger = Logger.getLogger(BeneficiaryAccountServiceImpl.class);
+	// private static Logger logger =
+	// Logger.getLogger(BeneficiaryAccountServiceImpl.class);
 	@Autowired
 	private BeneficiaryDAO beneficiaryDao;
 
 	@Override
-	public Set<Beneficiary> showBeneficiaryAccount(BigInteger uci) throws IBSExceptions  {
-	//	logger.info("entering into showBeneficiaryAccount method of BeneficiaryAccountServiceImpl class");
+	public Set<Beneficiary> showBeneficiaryAccount(BigInteger uci) throws IBSExceptions {
+		// logger.info("entering into showBeneficiaryAccount method of
+		// BeneficiaryAccountServiceImpl class");
 		return new HashSet<>(beneficiaryDao.getDetails(uci));
 
 	}
 
 	@Override
 	public boolean validateBeneficiaryAccountNumber(String accountNumber) {
-		//logger.info("entering into validateBeneficiaryAccountNumber method of BeneficiaryAccountServiceImpl class");
+		// logger.info("entering into validateBeneficiaryAccountNumber method of
+		// BeneficiaryAccountServiceImpl class");
 		boolean validNumber = false;
 		if (Pattern.matches("^[0-9]{11}$", accountNumber)) {
 			validNumber = true;
@@ -40,8 +44,9 @@ public class BeneficiaryAccountServiceImpl implements BeneficiaryAccountService 
 
 	@Override
 	public boolean validateBeneficiaryAccountNameOrBankName(String name) {
-		//logger.info(
-			//	"entering into validateBeneficiaryAccountNameOrBankName method of BeneficiaryAccountServiceImpl class");
+		// logger.info(
+		// "entering into validateBeneficiaryAccountNameOrBankName method of
+		// BeneficiaryAccountServiceImpl class");
 		boolean validName = false;
 		if (Pattern.matches("^[a-zA-z]+([\\s][a-zA-Z]+)*$", name))
 			validName = true;
@@ -50,7 +55,8 @@ public class BeneficiaryAccountServiceImpl implements BeneficiaryAccountService 
 
 	@Override
 	public boolean validateBeneficiaryIfscCode(String ifsc) {
-		//logger.info("entering into validateBeneficiaryIfscCode method of BeneficiaryAccountServiceImpl class");
+		// logger.info("entering into validateBeneficiaryIfscCode method of
+		// BeneficiaryAccountServiceImpl class");
 		boolean validIfsc = false;
 		if (ifsc.length() == 11)
 			validIfsc = true;
@@ -63,9 +69,10 @@ public class BeneficiaryAccountServiceImpl implements BeneficiaryAccountService 
 			throws IBSExceptions {
 		Beneficiary beneficiary;
 		boolean validModify = false;
-		//logger.info("entering into modifyBeneficiaryAccountDetails method of BeneficiaryAccountServiceImpl class");
+		// logger.info("entering into modifyBeneficiaryAccountDetails method of
+		// BeneficiaryAccountServiceImpl class");
 		beneficiary = beneficiaryDao.getBeneficiary(accountNumber);
-		//logger.debug(beneficiary1);
+		// logger.debug(beneficiary1);
 		if (beneficiary1.getAccountName() != null) {
 			beneficiary.setAccountName(beneficiary1.getAccountName());
 		}
@@ -78,14 +85,15 @@ public class BeneficiaryAccountServiceImpl implements BeneficiaryAccountService 
 		if (beneficiaryDao.updateDetails(beneficiary)) {
 			validModify = true;
 		}
-		//logger.debug(beneficiary1);
+		// logger.debug(beneficiary1);
 		return validModify;
 	}
 
 	@Override
 	@Transactional
 	public boolean deleteBeneficiaryAccountDetails(BigInteger accountNumber) throws IBSExceptions {
-		//logger.info("entering into deleteBeneficiaryAccountDetails method of BeneficiaryAccountServiceImpl class");
+		// logger.info("entering into deleteBeneficiaryAccountDetails method of
+		// BeneficiaryAccountServiceImpl class");
 		boolean result = beneficiaryDao.deleteDetails(accountNumber);
 		return result;
 	}
@@ -94,16 +102,20 @@ public class BeneficiaryAccountServiceImpl implements BeneficiaryAccountService 
 	@Transactional
 	public boolean saveBeneficiaryAccountDetails(BigInteger uci, Beneficiary beneficiary) throws IBSExceptions {
 		boolean check = false;
-		//logger.info("entering into saveBeneficiaryAccountDetails method of BeneficiaryAccountServiceImpl class");
-		beneficiary.setStatus(Status.PENDING);
+		// logger.info("entering into saveBeneficiaryAccountDetails method of
+		// BeneficiaryAccountServiceImpl class");
+		beneficiary.setStatus(CardStatus.PENDING);
+		Random r = new Random();
+		beneficiary.setBankId(r.nextInt(5));
 		if (beneficiaryDao.copyDetails(uci, beneficiary)) {
 			check = true;
 		}
 		return check;
 	}
+
 	public Beneficiary getBeneficiary(BigInteger accountNumber) throws IBSExceptions {
 		Beneficiary beneficiary = beneficiaryDao.getBeneficiary(accountNumber);
 		return beneficiary;
-		}
+	}
 
 }

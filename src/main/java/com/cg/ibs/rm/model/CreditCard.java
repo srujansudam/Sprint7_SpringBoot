@@ -15,11 +15,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.cg.ibs.rm.ui.Status;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.cg.ibs.rm.ui.CardStatus;
 
 @Entity
-@Table(name = "Credit_Card")
+@Table(name = "Credit_Cards")
 public class CreditCard {
 
 	@Id
@@ -33,7 +32,7 @@ public class CreditCard {
 	private Double income;
 	@Column(name = "credit_card_Status", nullable = false)
 	@Enumerated(EnumType.STRING)
-	private Status cardStatus=Status.PENDING;
+	private CardStatus cardStatus = CardStatus.PENDING;
 	@Column(name = "name_On_Credit_Card", nullable = false)
 	private String nameOnCard;
 	@Column(name = "Credit_Cvv", nullable = false, length = 3)
@@ -49,24 +48,33 @@ public class CreditCard {
 	@Column(name = "Credit_Expiry_Date", nullable = false)
 	private LocalDate dateOfExpiry;
 	@Column(name = "Credit_Card_Timestamp")
-	private LocalDateTime timestamp; 
-	
-	public LocalDateTime  getTimestamp() {
+	private LocalDateTime timestamp;
+	@Column(name = "BANKER_ID")
+	private Integer bankId;
+
+	public Integer getBankId() {
+		return bankId;
+	}
+
+	public void setBankId(Integer bankId) {
+		this.bankId = bankId;
+	}
+
+	public LocalDateTime getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(LocalDateTime  timestamp) {
+	public void setTimestamp(LocalDateTime timestamp) {
 		this.timestamp = timestamp;
 	}
 
 	@Column(name = "Remarks")
-	private String adminRemarks=" ";
+	private String adminRemarks = " ";
 
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "UCI")
 	private Customer customer;
-	
+
 	public Customer getCustomer() {
 		return customer;
 	}
@@ -83,8 +91,6 @@ public class CreditCard {
 		this.adminRemarks = adminRemarks;
 	}
 
-
-
 	public CreditCard() {
 		super();
 	}
@@ -97,11 +103,11 @@ public class CreditCard {
 		this.cardNumber = cardNumber;
 	}
 
-	public Status getCardStatus() {
+	public CardStatus getCardStatus() {
 		return cardStatus;
 	}
 
-	public void setCardStatus(Status cardStatus) {
+	public void setCardStatus(CardStatus cardStatus) {
 		this.cardStatus = cardStatus;
 	}
 
@@ -169,29 +175,34 @@ public class CreditCard {
 //		this.status = status;
 //	}
 
-	
-
 	public Integer getCreditScore() {
 		return creditScore;
 	}
 
+	
+
 	public CreditCard(BigInteger cardNumber, Integer creditScore, BigDecimal creditLimit, Double income,
-			Status cardStatus, String nameOnCard, String cvvNum, String currentPin, String cardType,
-			LocalDate dateOfExpiry, String adminRemarks, Customer customer) {
-		super();
-		this.cardNumber = cardNumber;
-		this.creditScore = creditScore;
-		this.creditLimit = creditLimit;
-		this.income = income;
-		this.cardStatus = cardStatus;
-		this.nameOnCard = nameOnCard;
-		this.cvvNum = cvvNum;
-		this.currentPin = currentPin;
-		this.cardType = cardType;
-		this.dateOfExpiry = dateOfExpiry;
-		this.adminRemarks = adminRemarks;
-		this.customer = customer;
-	}
+		CardStatus cardStatus, String nameOnCard, String cvvNum, String currentPin, String cardType, int month,
+		int year, LocalDate dateOfExpiry, LocalDateTime timestamp, Integer bankId, String adminRemarks,
+		Customer customer) {
+	super();
+	this.cardNumber = cardNumber;
+	this.creditScore = creditScore;
+	this.creditLimit = creditLimit;
+	this.income = income;
+	this.cardStatus = cardStatus;
+	this.nameOnCard = nameOnCard;
+	this.cvvNum = cvvNum;
+	this.currentPin = currentPin;
+	this.cardType = cardType;
+	this.month = month;
+	this.year = year;
+	this.dateOfExpiry = dateOfExpiry;
+	this.timestamp = timestamp;
+	this.bankId = bankId;
+	this.adminRemarks = adminRemarks;
+	this.customer = customer;
+}
 
 	public void setCreditScore(Integer creditScore) {
 		this.creditScore = creditScore;
@@ -213,12 +224,5 @@ public class CreditCard {
 		this.income = income;
 	}
 
-	@Override
-	public String toString() {
-		return "CreditCard [cardNumber=" + cardNumber + ", creditScore=" + creditScore + ", creditLimit=" + creditLimit
-				+ ", income=" + income + ", cardStatus=" + cardStatus + ", nameOnCard=" + nameOnCard + ", cvvNum="
-				+ cvvNum + ", currentPin=" + currentPin + ", cardType=" + cardType + ", dateOfExpiry=" + dateOfExpiry
-				+ ", customer=" + customer + "]";
-	}
 
 }

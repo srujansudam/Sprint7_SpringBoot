@@ -1,5 +1,5 @@
 package com.cg.ibs.rm.ui;
 
-public enum Status {
+public enum CardStatus {
 		ACTIVE, BLOCKED, PENDING
 }

@@ -2,18 +2,21 @@ package com.cg.ibs.rm.model;
 
 import java.io.Serializable;
 
-public class BankRepresentative implements Serializable{
-	/**
-	 * 
-	 */
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "BANK_ADMINS")
+public class RemmitanceHistory implements Serializable {
+
 	private static final long serialVersionUID = -3690871004696421591L;
 	private String response;
 
-	public BankRepresentative() {
+	public RemmitanceHistory() {
 		super();
 	}
 
-	public BankRepresentative(String response) {
+	public RemmitanceHistory(String response) {
 		super();
 		this.response = response;
 	}
