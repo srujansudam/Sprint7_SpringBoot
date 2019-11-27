@@ -21,16 +21,16 @@ public class Bank_AdminServiceImpl implements Bank_AdminService {
 	//private static Logger logger = Logger.getLogger(Bank_AdminServiceImpl.class);
 
 	@Override
-	public Set<BigInteger> showRequests() {
+	public Set<BigInteger> showRequests(Integer bankerId) {
 	//	logger.info("entering into showRequests method of Bank_AdminServiceImpl class");
-		return bankRepresentativeDAO.getRequests();
+		return bankRepresentativeDAO.getRequests( bankerId);
 
 	}
 
 	@Override
-	public Set<CreditCard> showUnapprovedCreditCards() {
+	public Set<CreditCard> showUnapprovedCreditCards(Integer bankerId) {
 	//	logger.info("entering into showUnapprovedCreditCards method of BankRepresentativeServiceImpl class");
-		return bankRepresentativeDAO.getCreditCardDetails();
+		return bankRepresentativeDAO.getCreditCardDetails(bankerId);
 
 	}
 

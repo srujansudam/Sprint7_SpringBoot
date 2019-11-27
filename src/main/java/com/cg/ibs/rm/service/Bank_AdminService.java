@@ -8,9 +8,9 @@ import com.cg.ibs.rm.model.Beneficiary;
 import com.cg.ibs.rm.model.CreditCard;
 
 public interface Bank_AdminService {
-	public Set<BigInteger> showRequests();
+	public Set<BigInteger> showRequests(Integer bankerId);
 
-	public Set<CreditCard> showUnapprovedCreditCards();
+	public Set<CreditCard> showUnapprovedCreditCards(Integer bankerId);
 
 	public Set<Beneficiary> showUnapprovedBeneficiaries();
 
