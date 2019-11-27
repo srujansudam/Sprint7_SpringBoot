@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import com.cg.ibs.rm.exception.ExceptionMessages;
 import com.cg.ibs.rm.exception.IBSExceptions;
+import com.cg.ibs.rm.model.Banker;
 import com.cg.ibs.rm.model.Beneficiary;
 import com.cg.ibs.rm.model.CreditCard;
 import com.cg.ibs.rm.model.Customer;
@@ -155,6 +156,11 @@ public class BankAdminDAOImpl implements BankAdminDAO {
 			result = true;
 		}
 		return result;
+	}
+	
+	public Banker getAdminDetails() {
+		
+		return null;
 	}
 
 }

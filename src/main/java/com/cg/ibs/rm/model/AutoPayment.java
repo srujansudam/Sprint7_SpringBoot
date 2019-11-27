@@ -31,16 +31,10 @@ public class AutoPayment implements Serializable {
 	private String dateOfEnd = null;
 	@Column(name = "SERVICENAME")
 	private String serviceName;
-	
-	@OneToMany(cascade = CascadeType.ALL)	
-	  @JoinColumns({
-	        @JoinColumn(
-	            name = "spi",
-	            referencedColumnName = "spi"),
-	        @JoinColumn(
-	            name = "uci",
-	            referencedColumnName = "uci")
-	    })
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "transactionId")
+	@JoinColumns({ @JoinColumn(name = "spi", referencedColumnName = "spi"),
+			@JoinColumn(name = "uci", referencedColumnName = "uci") })
 	private Set<TransactionBean> transactions = new HashSet<>();
 
 	public AutoPayment() {
@@ -63,11 +57,11 @@ public class AutoPayment implements Serializable {
 		this.dateOfEnd = dateOfEnd;
 		this.transactions = transactions;
 	}
- 
+
 	@Override
 	public String toString() {
 		return "AutoPayment [serviceProviderId=" + serviceProviderId + ", amount=" + amount + ", dateOfStart="
-				+ dateOfStart + ", dateOfEnd=" + dateOfEnd +  "]";
+				+ dateOfStart + ", dateOfEnd=" + dateOfEnd + "]";
 	}
 
 	public String getServiceName() {

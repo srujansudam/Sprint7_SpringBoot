@@ -16,6 +16,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import com.cg.ibs.rm.ui.TransactionMode;
+import com.cg.ibs.rm.ui.TransactionType;
+
 @Entity
 @Table(name = "Transactions")
 @NamedQueries({

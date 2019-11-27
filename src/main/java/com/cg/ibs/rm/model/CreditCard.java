@@ -51,7 +51,13 @@ public class CreditCard {
 	private LocalDateTime timestamp;
 	@Column(name = "BANKER_ID")
 	private Integer bankId;
+	@Column(name = "Remarks")
+	private String adminRemarks = " ";
 
+	@ManyToOne
+	@JoinColumn(name = "UCI")
+	private Customer customer;
+	
 	public Integer getBankId() {
 		return bankId;
 	}
@@ -68,12 +74,7 @@ public class CreditCard {
 		this.timestamp = timestamp;
 	}
 
-	@Column(name = "Remarks")
-	private String adminRemarks = " ";
 
-	@ManyToOne
-	@JoinColumn(name = "UCI")
-	private Customer customer;
 
 	public Customer getCustomer() {
 		return customer;
