@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
@@ -70,7 +71,7 @@ public class BankAdminDAOImpl implements BankAdminDAO {
 		return new HashSet<>(manager.createQuery(query).getResultList());
 	}
 
-	public Set<Beneficiary> getBeneficiaryDetails() {// beneficiary list which goes to bank admin
+	public Set<Beneficiary> getBeneficiaryDetails(Integer bankerId) {// beneficiary list which goes to bank admin
 		// logger.info("entering into getBeneficiaryDetails method of
 		// BankRepresentativeDAOImpl class");
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
@@ -78,7 +79,8 @@ public class BankAdminDAOImpl implements BankAdminDAO {
 		Root<Customer> custRoot = query.from(Customer.class);
 		Join<Customer, Beneficiary> unapprovedBeneficiaries = custRoot.join("beneficiaries");
 		query.select(unapprovedBeneficiaries)
-				.where(builder.equal(unapprovedBeneficiaries.get("status"), CardStatus.PENDING));
+				.where(builder.and(builder.equal(unapprovedBeneficiaries.get("status"), CardStatus.PENDING),
+						(builder.equal(unapprovedBeneficiaries.get("bankerId"), bankerId))));
 		return new HashSet<>(manager.createQuery(query).getResultList());
 	}
 
@@ -157,10 +159,19 @@ public class BankAdminDAOImpl implements BankAdminDAO {
 		}
 		return result;
 	}
-	
-	public Banker getAdminDetails() {
-		
-		return null;
+
+	@Override
+	public Banker getAdminDetails(String userId) throws IBSExceptions {
+		Banker banker = null;
+		TypedQuery<Banker> query = manager.createQuery("select b FROM Banker b WHERE b.userId=?1", Banker.class);
+		query.setParameter(1, userId);
+		try {
+			banker = query.getSingleResult();
+		} catch (Exception e) {
+			throw new IBSExceptions("Invalid UserId");
+		}
+
+		return banker;
 	}
 
 }

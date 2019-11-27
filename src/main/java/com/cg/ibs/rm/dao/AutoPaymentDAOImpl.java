@@ -22,8 +22,8 @@ import com.cg.ibs.rm.model.Customer;
 import com.cg.ibs.rm.model.ServiceProvider;
 import com.cg.ibs.rm.model.ServiceProviderId;
 import com.cg.ibs.rm.model.TransactionBean;
-import com.cg.ibs.rm.model.TransactionMode;
-import com.cg.ibs.rm.model.TransactionType;
+import com.cg.ibs.rm.ui.TransactionMode;
+import com.cg.ibs.rm.ui.TransactionType;
 
 @Repository("AutoPaymentDao")
 public class AutoPaymentDAOImpl implements AutoPaymentDAO {

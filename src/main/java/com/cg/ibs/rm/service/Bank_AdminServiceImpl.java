@@ -1,7 +1,6 @@
 package com.cg.ibs.rm.service;
 
 import java.math.BigInteger;
-import java.util.Random;
 import java.util.Set;
 
 //import org.apache.log4j.Logger;
@@ -11,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cg.ibs.rm.dao.BankAdminDAO;
 import com.cg.ibs.rm.exception.IBSExceptions;
+import com.cg.ibs.rm.model.Banker;
 import com.cg.ibs.rm.model.Beneficiary;
 import com.cg.ibs.rm.model.CreditCard;
 
@@ -35,9 +35,9 @@ public class Bank_AdminServiceImpl implements Bank_AdminService {
 	}
 
 	@Override
-	public Set<Beneficiary> showUnapprovedBeneficiaries() {
+	public Set<Beneficiary> showUnapprovedBeneficiaries(Integer bankerId) {
 		//logger.info("entering into showUnapprovedBeneficiaries method of BankRepresentativeServiceImpl class");
-		return bankRepresentativeDAO.getBeneficiaryDetails();
+		return bankRepresentativeDAO.getBeneficiaryDetails(bankerId);
 	}
 
 	@Override
@@ -86,8 +86,7 @@ public class Bank_AdminServiceImpl implements Bank_AdminService {
 	}
 
 	@Override
-	public Integer queuingMethod() {
-		Random r = new Random();
-		return r.nextInt(5)+1;
+	public Banker getBankerDetails(String userId) throws IBSExceptions {
+		return bankRepresentativeDAO.getAdminDetails(userId);
 	}
 }

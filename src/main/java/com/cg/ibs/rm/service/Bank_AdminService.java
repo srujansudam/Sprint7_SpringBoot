@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.util.Set;
 
 import com.cg.ibs.rm.exception.IBSExceptions;
+import com.cg.ibs.rm.model.Banker;
 import com.cg.ibs.rm.model.Beneficiary;
 import com.cg.ibs.rm.model.CreditCard;
 
@@ -12,7 +13,7 @@ public interface Bank_AdminService {
 
 	public Set<CreditCard> showUnapprovedCreditCards(Integer bankerId);
 
-	public Set<Beneficiary> showUnapprovedBeneficiaries();
+	public Set<Beneficiary> showUnapprovedBeneficiaries(Integer bankerId);
 
 	public boolean saveCreditCardDetails(BigInteger cardNumber) throws IBSExceptions;
 
@@ -22,6 +23,6 @@ public interface Bank_AdminService {
 
 	public boolean disapproveCreditCard(BigInteger cardNumber) throws IBSExceptions;
 	
-	public Integer queuingMethod();
+	public Banker getBankerDetails(String userId) throws IBSExceptions;
 
 }
