@@ -49,7 +49,7 @@ public class CreditCard {
 	private LocalDate dateOfExpiry;
 	@Column(name = "Credit_Card_Timestamp")
 	private LocalDateTime timestamp;
-	@Column(name = "BANKER_ID")
+	@Column(name = "BANKER_ID", nullable = false)
 	private Integer bankId;
 	@Column(name = "Remarks")
 	private String adminRemarks = " ";

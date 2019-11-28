@@ -7,6 +7,7 @@ import java.util.Set;
 import com.cg.ibs.rm.exception.IBSExceptions;
 import com.cg.ibs.rm.model.Account;
 import com.cg.ibs.rm.model.AutoPayment;
+import com.cg.ibs.rm.model.AutopaymentTransaction;
 import com.cg.ibs.rm.model.ServiceProvider;
 import com.cg.ibs.rm.model.ServiceProviderId;
 
@@ -29,5 +30,8 @@ public interface AutoPaymentDAO {
 	public boolean updateDetails(AutoPayment autoPayment) throws IBSExceptions;
 	
 	public AutoPayment getAutopayment(ServiceProviderId providerId) throws IBSExceptions;
+
+	
+	public Set<AutopaymentTransaction> getTransaction(BigInteger uci) throws IBSExceptions;
 
 }

@@ -11,6 +11,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -21,6 +23,7 @@ import com.cg.ibs.rm.ui.TransactionType;
 
 @Entity
 @Table(name = "Transactions")
+@Inheritance(strategy = InheritanceType.JOINED)
 @NamedQueries({
 		@NamedQuery(name = "GET_MINI", query = "select t from TransactionBean t where t.account.accNo= :accNo order by t.transactionDate"),
 		@NamedQuery(name = "GET_PERIODIC", query = "select t from TransactionBean t where t.account.accNo= :accNo AND t.transactionDate BETWEEN :startDate AND :endDate") })
@@ -74,7 +77,7 @@ public class TransactionBean implements Serializable {
 
 	public TransactionBean() {
 		super();
-		// TODO Auto-generated constructor stub
+
 	}
 
 	public int getTransactionId() {

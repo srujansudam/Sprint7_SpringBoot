@@ -18,10 +18,10 @@ import com.cg.ibs.rm.exception.ExceptionMessages;
 import com.cg.ibs.rm.exception.IBSExceptions;
 import com.cg.ibs.rm.model.Account;
 import com.cg.ibs.rm.model.AutoPayment;
+import com.cg.ibs.rm.model.AutopaymentTransaction;
 import com.cg.ibs.rm.model.Customer;
 import com.cg.ibs.rm.model.ServiceProvider;
 import com.cg.ibs.rm.model.ServiceProviderId;
-import com.cg.ibs.rm.model.TransactionBean;
 import com.cg.ibs.rm.ui.TransactionMode;
 import com.cg.ibs.rm.ui.TransactionType;
 
@@ -113,7 +113,7 @@ public class AutoPaymentDAOImpl implements AutoPaymentDAO {
 
 	@Override
 	public boolean setTransaction(BigInteger uci, BigInteger accountNumber, AutoPayment autoPayment) {
-		TransactionBean transactionBean = new TransactionBean();
+		AutopaymentTransaction transactionBean = new AutopaymentTransaction();
 		transactionBean.setTransactionDate(LocalDateTime.now());
 		transactionBean.setTransactionAmount(autoPayment.getAmount());
 		transactionBean.setTransactionDescription("Auto Payment");
@@ -127,6 +127,21 @@ public class AutoPaymentDAOImpl implements AutoPaymentDAO {
 		manager.merge(transactionBean);
 		manager.merge(autoPayment);
 		return true;
+	}
+	
+	@Override
+	public Set<AutopaymentTransaction> getTransaction(BigInteger uci) throws IBSExceptions {
+		
+		TypedQuery<AutopaymentTransaction> query = manager
+				.createQuery("SELECT a FROM AutopaymentTransaction a WHERE a.serviceProviderId.uci = ?1", AutopaymentTransaction.class);
+		query.setParameter(1, uci);
+		List<AutopaymentTransaction> list = query.getResultList();
+		if (!list.isEmpty()) {
+			return new HashSet<>(list);
+		} else {
+			throw new IBSExceptions("No transactions.");
+		}
+		
 	}
 
 	@Override

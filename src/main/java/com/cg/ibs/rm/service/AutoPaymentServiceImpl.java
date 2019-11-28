@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cg.ibs.rm.dao.AutoPaymentDAO;
 import com.cg.ibs.rm.exception.IBSExceptions;
 import com.cg.ibs.rm.model.AutoPayment;
+import com.cg.ibs.rm.model.AutopaymentTransaction;
 import com.cg.ibs.rm.model.ServiceProvider;
 import com.cg.ibs.rm.model.ServiceProviderId;
 
@@ -68,6 +69,13 @@ public class AutoPaymentServiceImpl implements AutoPaymentService {
 		}
 
 		return validAutoDeduct;
+	}
+	
+	@Override
+	@Transactional
+	public Set<AutopaymentTransaction> getTransactions(BigInteger uci) throws IBSExceptions
+	{
+		return autoPaymentDao.getTransaction(uci);
 	}
 
 	@Override

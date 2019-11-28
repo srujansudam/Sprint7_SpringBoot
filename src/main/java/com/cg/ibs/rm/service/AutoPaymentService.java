@@ -5,6 +5,7 @@ import java.util.Set;
 
 import com.cg.ibs.rm.exception.IBSExceptions;
 import com.cg.ibs.rm.model.AutoPayment;
+import com.cg.ibs.rm.model.AutopaymentTransaction;
 import com.cg.ibs.rm.model.ServiceProvider;
 import com.cg.ibs.rm.model.ServiceProviderId;
 
@@ -22,4 +23,6 @@ public interface AutoPaymentService {
 	public boolean updateDetails(ServiceProviderId providerId, AutoPayment autoPayment) throws IBSExceptions;
 	
 	public AutoPayment getAutopayment(ServiceProviderId providerId) throws IBSExceptions;
+
+	Set<AutopaymentTransaction> getTransactions(BigInteger uci) throws IBSExceptions;
 }

@@ -24,25 +24,25 @@ public class Beneficiary implements Serializable {
 	 */
 	private static final long serialVersionUID = 1597299572298697066L;
 	@Id
-	@Column(name = "Account_number")
+	@Column(name = "Account_number", nullable = false, length = 11)
 	private BigInteger accountNumber;
-	@Column(name = "Account_name")
+	@Column(name = "Account_name", nullable = false)
 	private String accountName;
-	@Column(name = "Ifsc_Code")
+	@Column(name = "Ifsc_Code", nullable = false, length = 11)
 	private String ifscCode;
-	@Column(name = "Bank_name")
+	@Column(name = "Bank_name", nullable = false)
 	private String bankName;
-	@Column(name = "Type_of_account")
+	@Column(name = "Type_of_account", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Beneficiary_Type type;
-	@Column(name = "Status")
+	@Column(name = "Status", nullable = false)
 	@Enumerated(EnumType.STRING)
-	private CardStatus status;
+	private CardStatus status= CardStatus.PENDING;
 	@Column(name = "Remarks")
 	private String adminRemarks = " ";
 	@Column(name = "Beneficiary_Timestamp")
 	private LocalDateTime timestamp;
-	@Column(name = "BANKER_ID")
+	@Column(name = "BANKER_ID", nullable = false)
 	private Integer bankId;
 
 	@ManyToOne

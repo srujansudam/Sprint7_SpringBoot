@@ -23,19 +23,19 @@ public class AutoPayment implements Serializable {
 	private static final long serialVersionUID = -4643315123018156703L;
 	@EmbeddedId
 	private ServiceProviderId serviceProviderId;
-	@Column(name = "AMOUNT")
+	@Column(name = "AMOUNT", nullable = false)
 	private BigDecimal amount;
-	@Column(name = "DATEOFSTART")
+	@Column(name = "DATEOFSTART", nullable = false)
 	private String dateOfStart = null;
 	@Column(name = "DATEOFEND")
 	private String dateOfEnd = null;
-	@Column(name = "SERVICENAME")
+	@Column(name = "SERVICENAME", nullable = false)
 	private String serviceName;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "transactionId")
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumns({ @JoinColumn(name = "spi", referencedColumnName = "spi"),
 			@JoinColumn(name = "uci", referencedColumnName = "uci") })
-	private Set<TransactionBean> transactions = new HashSet<>();
+	private Set<AutopaymentTransaction> transactions = new HashSet<>();
 
 	public AutoPayment() {
 		super();
@@ -49,7 +49,7 @@ public class AutoPayment implements Serializable {
 	}
 
 	public AutoPayment(ServiceProviderId serviceProviderId, BigDecimal amount, String dateOfStart, String dateOfEnd,
-			Set<TransactionBean> transactions) {
+			Set<AutopaymentTransaction> transactions) {
 		super();
 		this.serviceProviderId = serviceProviderId;
 		this.amount = amount;
@@ -80,11 +80,13 @@ public class AutoPayment implements Serializable {
 		this.dateOfEnd = dateOfEnd;
 	}
 
-	public Set<TransactionBean> getTransactions() {
+
+
+	public Set<AutopaymentTransaction> getTransactions() {
 		return transactions;
 	}
 
-	public void setTransactions(Set<TransactionBean> transactions) {
+	public void setTransactions(Set<AutopaymentTransaction> transactions) {
 		this.transactions = transactions;
 	}
 
