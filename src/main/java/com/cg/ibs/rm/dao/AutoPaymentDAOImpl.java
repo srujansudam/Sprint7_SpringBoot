@@ -22,6 +22,7 @@ import com.cg.ibs.rm.model.AutopaymentTransaction;
 import com.cg.ibs.rm.model.Customer;
 import com.cg.ibs.rm.model.ServiceProvider;
 import com.cg.ibs.rm.model.ServiceProviderId;
+import com.cg.ibs.rm.model.TransactionBean;
 import com.cg.ibs.rm.ui.TransactionMode;
 import com.cg.ibs.rm.ui.TransactionType;
 

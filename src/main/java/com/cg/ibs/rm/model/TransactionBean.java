@@ -23,7 +23,7 @@ import com.cg.ibs.rm.ui.TransactionType;
 
 @Entity
 @Table(name = "Transactions")
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @NamedQueries({
 		@NamedQuery(name = "GET_MINI", query = "select t from TransactionBean t where t.account.accNo= :accNo order by t.transactionDate"),
 		@NamedQuery(name = "GET_PERIODIC", query = "select t from TransactionBean t where t.account.accNo= :accNo AND t.transactionDate BETWEEN :startDate AND :endDate") })
